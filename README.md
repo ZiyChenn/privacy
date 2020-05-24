@@ -70,7 +70,7 @@ GitHub pull requests. To speed the code review process, we ask that:
 ## Tutorials directory
 
 To help you get started with the functionalities provided by this library, we
-provide a detailed walkthrough [here](tutorials/walkthrough/walkthrough.md) that
+provide a detailed walkthrough [here](tutorials/walkthrough/README.md) that
 will teach you how to wrap existing optimizers
 (e.g., SGD, Adam, ...) into their differentially private counterparts using
 TensorFlow (TF) Privacy. You will also learn how to tune the parameters
@@ -92,7 +92,14 @@ will not break.
 
 This folder contains code to reproduce results from research papers related to
 privacy in machine learning. It is not maintained as carefully as the tutorials
-directory, but rather intended as a convenient archive. 
+directory, but rather intended as a convenient archive.
+
+## TensorFlow 2.x
+
+At the moment, TensorFlow Privacy does not generally work with TensorFlow 2.x.
+However, as of 2020-04-24. there is a [RFC to revamp Keras optimizers](https://github.com/tensorflow/community/pull/234)
+that will enable this. Once this is done, we will update TensorFlow Privacy
+as soon as possible. Thank you for your patience.
 
 ## Remarks
 

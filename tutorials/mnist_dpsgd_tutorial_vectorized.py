@@ -21,14 +21,12 @@ from __future__ import print_function
 from absl import app
 from absl import flags
 
-from distutils.version import LooseVersion
-
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
-from privacy.analysis.rdp_accountant import compute_rdp
-from privacy.analysis.rdp_accountant import get_privacy_spent
-from privacy.optimizers import dp_optimizer_vectorized
+from tensorflow_privacy.privacy.analysis.rdp_accountant import compute_rdp
+from tensorflow_privacy.privacy.analysis.rdp_accountant import get_privacy_spent
+from tensorflow_privacy.privacy.optimizers import dp_optimizer_vectorized
 
 
 flags.DEFINE_boolean(
@@ -45,17 +43,11 @@ flags.DEFINE_integer(
     '(must evenly divide batch_size)')
 flags.DEFINE_string('model_dir', None, 'Model directory')
 
-
 FLAGS = flags.FLAGS
-
 
 NUM_TRAIN_EXAMPLES = 60000
 
-
-if LooseVersion(tf.__version__) < LooseVersion('2.0.0'):
-  GradientDescentOptimizer = tf.train.GradientDescentOptimizer
-else:
-  GradientDescentOptimizer = tf.optimizers.SGD  # pylint: disable=invalid-name
+GradientDescentOptimizer = tf.train.GradientDescentOptimizer
 
 
 def compute_epsilon(steps):
@@ -95,7 +87,7 @@ def cnn_model_fn(features, labels, mode):
   vector_loss = tf.nn.sparse_softmax_cross_entropy_with_logits(
       labels=labels, logits=logits)
   # Define mean of loss across minibatch (for reporting through tf.Estimator).
-  scalar_loss = tf.reduce_mean(vector_loss)
+  scalar_loss = tf.reduce_mean(input_tensor=vector_loss)
 
   # Configure the training op (for TRAIN mode).
   if mode == tf.estimator.ModeKeys.TRAIN:
